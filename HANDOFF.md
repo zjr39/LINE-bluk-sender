@@ -311,20 +311,23 @@ beacon 種類：`scan` / `scrollloaded` / `item` / `done` / `tagdone` / `csvexpo
 
 ---
 
-## 10. GitHub 發布資訊
+## 10. GitHub 發布
 
 | 項目 | 值 |
 |---|---|
 | 存放庫 | <https://github.com/zjr39/LINE-bluk-sender>（Public） |
 | 預設分支 | `main` |
 | 授權 | MIT，著作權人 `zjr39` |
-| commit 身分 | `user.name = zjr39`、`user.email = 184933544+zjr39@users.noreply.github.com`（GitHub noreply，避免公開真實信箱） |
+| git | PortableGit 2.56.0（`%LOCALAPPDATA%\Programs\PortableGit`），已加入使用者 PATH |
+| commit 身分 | `zjr39` / `zjr20031214@outlook.com` |
 
-### 這個 repo 是「清理後的副本」，不是開發資料夾
+### repo 是「清理後的副本」，不是這個開發資料夾
 
-發布內容來自 `build\stage-github.js` 產生的**部署副本**（例如 `%USERPROFILE%\Desktop\LINE-bluk-sender-deploy`）。
+公開內容由 `build\stage-github.js` 產生到**部署副本**
+（`%USERPROFILE%\Desktop\LINE-bluk-sender-deploy`），
+這個開發資料夾**完全不動、也沒有 `.git`**。
 
-**原始開發資料夾完全不動**，而且以下東西**永遠不進版控**（因為它們含真實客戶資料）：
+**永遠不進版控**（含真實客戶資料）：
 
 ```
 logs/                       真實客戶姓名、帳號 ID、發送內容
@@ -336,30 +339,44 @@ snippet/*.backup*.js        舊版（含 122 筆硬編碼姓名）
 snippet/*.pre*.js           修改前的快照
 ```
 
-### 要更新 GitHub 上的版本時
+`stage-github.js` 是**只複製白名單**（不是排除黑名單），所以不可能漏掉；
+並會把測試資料裡的客戶名稱換成 `Alice` / `Bob`。
+
+### 更新流程
+
+雙擊桌面 **`update-and-push.cmd`**（會依序做：重建副本 → commit → 安全掃描 → push）。
+
+或手動：
 
 ```powershell
-# 1. 重新產生部署副本（會複製白名單檔案並清理個資）
+cd C:\Users\29496\Documents\DeepSeekHarness\LINE
 node build\stage-github.js "$env:USERPROFILE\Desktop\LINE-bluk-sender-deploy"
-
-# 2. 進部署資料夾提交推送
 cd "$env:USERPROFILE\Desktop\LINE-bluk-sender-deploy"
 git add -A
 git commit -m "更新說明"
 git push
 ```
 
-**推送前務必複核**（零命中才可推）：
+### 推送前的安全關卡
+
+`.git` 會保留，所以重建副本不會弄壞歷史。推送前務必確認零命中：
 
 ```powershell
-# 用「客戶名稱片段」與「帳號 ID 特徵」掃描，零命中才可推
 # U + 32 位十六進位 = LINE 官方帳號 ID 的格式
-git grep -n -E "客戶名稱片段|U[0-9a-f]{32}"
+git grep -n -E "U[0-9a-f]{32}"
+git ls-files
 ```
+
+`push-to-github.cmd` 與 `update-and-push.cmd` 都會自動做這個掃描。
 
 ### 認證
 
-GitHub 已不接受密碼推送。需要 **Personal Access Token**（classic，勾 `repo`）：
+GitHub 不接受密碼推送，需要 **Personal Access Token**（classic，勾 `repo`）：
 <https://github.com/settings/tokens> —— 推送時於彈出視窗貼上。
-**Token 不要寫進任何檔案、不要 commit、不要貼給任何人。**
+**Token 不要寫進任何檔案、不要 commit、不要給任何人。**
+
+### 已知小瑕疵
+
+存放庫名稱拼字為 `bluk`（應為 `bulk`）。要改的話在 GitHub Settings → Rename，
+再更新部署副本的 remote 與 `push-to-github.ps1` 裡的 `$RepoUrl`。
 
