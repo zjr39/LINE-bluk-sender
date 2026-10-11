@@ -1,0 +1,37 @@
+# 執行期產物（含真實客戶資料，絕不可上傳）
+logs/
+backups/
+shots/
+*.zip
+*.bak
+
+# 客戶名單（個人資料）
+build/vip-names.txt
+report-line-paste.*
+
+# 面板的開發中備份
+snippet/*.backup*.js
+snippet/*.pre*.js
+
+# 一次性遷移腳本（與本專案歷史綁定，不適合公開）
+build/add-*.js
+build/fix-*.js
+build/insert-*.js
+build/opt-*.js
+build/apply-*.js
+build/remove-*.js
+build/clear-*.js
+build/rename-*.js
+build/image-*.js
+build/gift-*.js
+build/doc-*.js
+build/update-*.js
+build/ship-*.js
+build/cleanup-*.js
+build/rewrite-*.js
+build/stage-*.js
+
+# 一般
+node_modules/
+.DS_Store
+Thumbs.db

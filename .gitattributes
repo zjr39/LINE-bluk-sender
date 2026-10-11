@@ -1,0 +1,7 @@
+# 一律用 LF 儲存，避免 CRLF 造成整檔 diff
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.png binary
+*.jpg binary
+*.zip binary

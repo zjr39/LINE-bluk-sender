@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>LINE 聯絡人批量助手 — 安裝</title>
+<style>
+  body{font:15px/1.85 "Microsoft YaHei",system-ui,sans-serif;max-width:960px;margin:34px auto;padding:0 22px;color:#1b1b1b}
+  h1{font-size:24px;margin:0 0 6px}
+  h2{font-size:17px;margin:22px 0 8px;padding-bottom:4px;border-bottom:2px solid #e0e6ea}
+  .sub{color:#667;margin-bottom:18px}
+  .box{background:#f6f8fa;border:1px solid #d8dee4;border-radius:10px;padding:16px 20px;margin:16px 0}
+  .warn{background:#fff8e1;border-color:#f0e6c8;color:#8d6e00}
+  .err{background:#ffebee;border-color:#ffcdd2;color:#b71c1c}
+  .ok{background:#e8f5e9;border-color:#c8e6c9;color:#1b5e20}
+  code{background:#eef1f4;padding:2px 6px;border-radius:5px;font-size:13px}
+  .bm{display:inline-block;padding:13px 24px;background:#06c755;color:#fff;border-radius:9px;
+      text-decoration:none;font-weight:700;font-size:17px;box-shadow:0 3px 12px rgba(0,0,0,.22);cursor:grab}
+  ol li,ul li{margin:6px 0}
+  .big{font-size:16px;font-weight:700}
+  .status{font-weight:700}
+  table{border-collapse:collapse;width:100%;margin:8px 0}
+  th,td{border:1px solid #d8dee4;padding:6px 9px;text-align:left;font-size:14px}
+  th{background:#eef1f4}
+</style>
+</head>
+<body>
+
+<h1>LINE 聯絡人批量助手</h1>
+<div class="sub">批次發送訊息、批次貼標籤、匯出聯絡人清單。設定一次、重複使用。</div>
+
+<div class="box err">
+  <div class="big">⚠ 這個工具會真的把訊息送給客戶</div>
+  送出後無法收回。第一次使用請務必<b>先小範圍測試</b>（發文字：把「從」「到」都設成 1；發圖：「試送一張」），確認正確再跑全部。
+</div>
+
+<h2>安裝（三步，約 1 分鐘）</h2>
+
+<div class="box">
+  <div class="big">第一步：啟動本機服務（每次要用之前都要開）</div>
+  <ol>
+    <li>在這個資料夾裡雙擊 <code>start-server.cmd</code>。</li>
+    <li>會跳出黑色視窗，看到「<b>✅ 服務已啟動</b>」就對了。</li>
+    <li><b>這個視窗要一直開著</b>，用完再關。關掉它，書籤就會失效。</li>
+  </ol>
+  <p>沒裝 Node.js 的話，這個檔案會自動幫你裝（需要網路，約 1 分鐘）；裝完請<b>關掉視窗再雙擊一次</b>。</p>
+  <p class="status" id="svcstatus">正在檢查服務狀態…</p>
+</div>
+
+<div class="box">
+  <div class="big">第二步：安裝書籤小工具（只需一次）</div>
+  <ol>
+    <li>按 <code>Ctrl+Shift+B</code>，讓 Edge 的書籤列出現。</li>
+    <li>把下面這顆綠色按鈕 <b>拖到書籤列</b>上放開。</li>
+  </ol>
+  <p><a class="bm" href="javascript:void(fetch('http://127.0.0.1:8765/snippet.js').then(function(r){return r.text()}).then(function(c){(new Function(c))()}).catch(function(){alert('本機服務沒有啟動。\n請先雙擊資料夾裡的 start-server.cmd，再點這個書籤。')}))">LINE 批量助手</a></p>
+  <p style="color:#666;font-size:13px">拖曳沒反應？改用 <code>Ctrl+Shift+O</code> 開書籤管理員 →「⋯」→「新增書籤」，
+  名稱填 <code>LINE 批量助手</code>，網址貼上本頁最下方那串。</p>
+</div>
+
+<div class="box">
+  <div class="big">第三步：開始使用</div>
+  <ol>
+    <li>登入 LINE 官方帳號管理後台，打開「<b>聯絡人</b>」頁面。</li>
+    <li>點一下書籤列上的「<b>LINE 批量助手</b>」→ 畫面<b>右上角</b>出現綠色面板。</li>
+  </ol>
+</div>
+
+<h2>功能一：批次發送訊息</h2>
+<div class="box">
+  <ol>
+    <li>在面板最上方的文字框<b>貼上要發送的內容</b>（會自動記住，下次開啟還在）。</li>
+    <li>按「<b>掃描全部（反覆載入）</b>」→ 等它跑完。</li>
+    <li>按「<b>預覽名單</b>」→ 確認「會發送 N 位」符合預期。</li>
+    <li>把範圍限成 1 位做測試（「從」填 1、「到」填 1）→ 去聊天室確認訊息正確送出。</li>
+    <li>確認無誤後按「<b>開始全部</b>」。要中途停就按「停止」。</li>
+  </ol>
+  <p><b>「粘貼後自動傳送」</b>預設<b>開啟</b>；取消勾選就只貼上、不送出。</p>
+</div>
+
+<h2>功能二：篩選要發給誰</h2>
+<div class="box">
+  <p>面板上的黃色「篩選」區：</p>
+  <table>
+    <tr><th>欄位</th><th>用法</th></tr>
+    <tr><td><b>只發給</b></td><td>填標籤或名稱關鍵字。多個用 <code>,</code> 分隔，<b>滿足任一個就發</b>。例：<code>VIP,繁體</code></td></tr>
+    <tr><td><b>排除</b></td><td>填不要的關鍵字（優先於「只發給」）。例：<code>測試,黑名單</code></td></tr>
+    <tr><td><b>只發好友＋有標籤</b></td><td>預設開啟。只發給「類型＝好友」且「有標籤」的對象</td></tr>
+  </table>
+  <div class="box warn" style="margin:10px 0">
+    <b>固定規則：類型為「只傳訊的用戶」一律不發</b>，即使他有 VIP 標籤。<br>
+    （LINE 官方帳號本來就無法對這類用戶發起聊天，硬發也不會成功。）
+  </div>
+  <p>按「<b>預覽名單</b>」可在發送前看到會發給誰、排除了幾位。</p>
+</div>
+
+<h2>功能三：匯出聯絡人 CSV</h2>
+<div class="box">
+  <p>按「<b>匯出聯絡人 CSV</b>」會下載一份 Excel 可直接開的檔案，欄位：</p>
+  <p><code>#</code>、<code>聯絡人姓名</code>、<code>標籤</code>、<code>類型</code>、<code>狀態</code>、<code>最近聊天日期</code>、<code>依目前篩選</code></p>
+  <p>（「匯出結果 CSV」則是匯出批次執行的成功／失敗明細。）</p>
+</div>
+
+<h2>功能四：批次加標籤</h2>
+<div class="box">
+  <p>面板上綠色「批次加標籤」區：</p>
+  <ol>
+    <li>在文字框貼上<b>要加標籤的聯絡人名單</b>（一行一個名稱）。</li>
+    <li>「標籤名稱」填要加的標籤，可用 <code>,</code> 一次加多個（例：<code>繁體,英語</code>）。</li>
+    <li>按「<b>預覽符合</b>」→ 確認找得到幾位、已有標籤幾位。</li>
+    <li>按「<b>開始加標籤</b>」。已有該標籤的會自動跳過。</li>
+  </ol>
+  <p>流程與手動操作相同：點「新增標籤」→ 輸入 → Enter → 點「儲存」，逐位處理。</p>
+</div>
+
+<h2>面板按鈕一覽</h2>
+<div class="box">
+  <table>
+    <tr><th>按鈕</th><th>作用</th></tr>
+    <tr><td>掃描聯絡人</td><td>只抓目前畫面上已載入的列（快速但不完整）</td></tr>
+    <tr><td>掃描全部（反覆載入）</td><td><b>每次開跑前都要按</b>。清單是分批載入的，這樣才拿得到完整名單</td></tr>
+    <tr><td>（測試方式）</td><td>把「從」「到」都設成 1，只跑第一位驗證文案</td></tr>
+    <tr><td>開始全部</td><td>處理「從」到「到」範圍內的對象</td></tr>
+    <tr><td>暫停 / 停止</td><td>暫停可再繼續；停止則結束本輪</td></tr>
+    <tr><td>檢查輸入框</td><td>找不到輸入框或送不出去時，用來排錯</td></tr>
+    <tr><td>預覽名單 / 匯出聯絡人 CSV</td><td>見上方功能二、三</td></tr>
+    <tr><td>預覽符合 / 開始加標籤</td><td>見上方功能四</td></tr>
+    <tr><td>匯出結果 CSV</td><td>匯出批次執行結果</td></tr>
+    <tr><td>選擇圖片 / 清除</td><td>選一張要發送的圖片（會記住，重整後帶回）</td></tr>
+    <tr><td>試送一張</td><td>只對目前開啟的聊天室發送圖片，驗證用</td></tr>
+    <tr><td>批次發圖</td><td>對名單（依篩選）逐位發送該圖片</td></tr>
+  </table>
+  <p>面板右上角：<b>◢</b> 拖曳可調整面板大小、<b>—</b> 收合、<b>✕</b> 關閉。<br>
+  三個文字框下方各有一條<b>灰色拖曳條</b>，可調整該框高度。</p>
+</div>
+
+
+<h2>功能五：批次發圖</h2>
+<div class="box err">
+  <b>重要：LINE 不允許「只附加圖片、不送出」。</b><br>
+  選圖後 LINE 一定會跳「確定要傳送檔案至此聊天室嗎」的確認彈窗，按「傳送」就立即發給客戶。
+  本工具會<b>自動處理這個彈窗並送出</b>——所以批次發圖是<b>真的發送</b>，無法先預覽再決定。
+</div>
+<div class="box">
+  <p>面板上藍色「批次發圖」區：</p>
+  <ol>
+    <li>按「<b>選擇圖片</b>」選一張本地圖片（會顯示縮圖，並<b>記住</b>，重新整理後自動帶回）。</li>
+    <li>先按「<b>試送一張</b>」——只對<b>目前開啟的那個聊天室</b>發送，用來確認圖片正確。</li>
+    <li>確認無誤後按「<b>批次發圖</b>」→ 對名單（依篩選規則）逐位發送。</li>
+  </ol>
+  <p>「<b>清除</b>」可移除已選的圖片。</p>
+  <p><b>建議</b>：發圖前先用「報告名單」確認對象正確；正式跑之前務必先「試送一張」。</p>
+</div>
+
+<h2>重要提醒</h2>
+<div class="box warn">
+  <ul>
+    <li>執行時<b>不要動滑鼠鍵盤</b>、不要切換分頁，否則可能貼錯或中斷。</li>
+    <li>請先確認清單已依「姓名」排序，面板會依目前順序由上往下跑。</li>
+    <li>清單是分批載入的，<b>一定要先按「掃描全部」</b>，否則會漏掉後面的聯絡人。</li>
+    <li>同名聯絡人無法自動區分，面板會提出警告。</li>
+    <li>每位粘貼前都會<b>確認目前開啟的聊天室就是目標對象</b>，不符就跳過，不會貼錯人。</li>
+  </ul>
+</div>
+
+<h2>常見問題</h2>
+<div class="box">
+  <ul>
+    <li><b>點書籤沒反應 / 跳出「本機服務沒有啟動」</b> → 雙擊 <code>start-server.cmd</code>，然後在 LINE 分頁按 <code>F5</code> 再點一次書籤。</li>
+    <li><b>服務視窗說連接埠被占用</b> → 服務已經在跑了，那個視窗直接關掉即可。</li>
+    <li><b>面板顯示找不到輸入框</b> → 先點一位聯絡人的「聊天」讓右側輸入框出現，再按「檢查輸入框」。</li>
+    <li><b>掃描到的人數比實際少</b> → 把面板的「掃描輪數」調大（例如 5 或 10），再按一次「掃描全部」。判斷方法：看面板顯示的「後 3 位」是否等於清單真正的最後一位。</li>
+    <li><b>訊息有貼上但沒送出</b> → 該筆會記為失敗，請手動送出，並把「間隔(ms)」調大後再試。</li>
+    <li><b>想中途停止</b> → 按「停止」。正在處理的那一位會完成，其餘不會再跑。</li>
+  </ul>
+</div>
+
+<div class="box">
+  <b>書籤網址（手動新增時貼這串）</b>
+  <textarea id="urlbox" readonly style="width:100%;height:60px;margin-top:8px;font:11px monospace"></textarea>
+</div>
+
+<script>
+(function () {
+  document.getElementById('urlbox').value = document.querySelector('.bm').getAttribute('href');
+  var el = document.getElementById('svcstatus');
+  fetch('http://127.0.0.1:8765/ping', { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function () {
+      el.textContent = '✅ 服務正在執行中，可以繼續第二步。';
+      el.style.color = '#1b5e20';
+    })
+    .catch(function () {
+      el.textContent = '⚠ 還沒偵測到服務。請先雙擊 start-server.cmd 啟動，再重新整理本頁。';
+      el.style.color = '#b71c1c';
+    });
+})();
+</script>
+</body>
+</html>

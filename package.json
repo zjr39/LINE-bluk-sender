@@ -1,0 +1,17 @@
+{
+  "name": "line-bluk-sender",
+  "version": "1.0.0",
+  "description": "LINE 官方帳號聯絡人批次助手：批次發送訊息／圖片、批次貼標籤、個人化禮包碼、匯出 CSV",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "serve": "node server/server.js",
+    "test": "node tests/test-tag-parse.js",
+    "audit": "node build/audit-state-fields.js && node build/audit-buttons.js && node build/audit-dupes.js && node build/audit-handlers.js",
+    "build:portable": "node build/build-portable.js",
+    "build:publish": "node build/make-publish.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
